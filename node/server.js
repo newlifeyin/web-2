@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-const cors = require('cors')
 
 app.all('*', function (req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
@@ -12,7 +11,6 @@ app.all('*', function (req, res, next) {
 });
 
 app.use(express.json())
-app.use(cors())
 
 let user = require('./api.js');
 app.use(user);
