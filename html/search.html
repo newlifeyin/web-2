@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>home</title>
+    <meta name="author" content="yinqi">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <style>
+        .title {
+            font-size: 24px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .title a {
+            margin-left: 50px;
+        }
+
+        .box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .box .form-group {
+            width: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lyear-layout-web">
+        <div class="lyear-layout-container">
+            <div class="title">
+                <a href="main.html">Home Page</a>
+                <a href="criteria.html">Fundraisers Page</a>
+                <a href="search.html">Details Page</a>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="box">
+                        <div class="form-group col-md-12">
+                            <label>FUNDRAISER_ID:</label>
+                            <span id="FUNDRAISER_ID"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>ORGANIZER:</label>
+                            <span id="ORGANIZER"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>CAPTION:</label>
+                            <span id="CAPTION"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>TARGET_FUNDING:</label>
+                            <span id="TARGET_FUNDING"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>CURRENT_FUNDING:</label>
+                            <span id="CURRENT_FUNDING"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>CITY:</label>
+                            <span id="CITY"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>ACTIVE:</label>
+                            <span id="ACTIVE"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>CATEGORY_ID:</label>
+                            <span id="CATEGORY_ID"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <button type="button" id="Donate"
+                                style="margin: 25px 100px 0 0;float: right;">Donate</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            console.log(location.search);
+            let param = location.search ? location.search.split('?') : ''
+            if (!param) {
+                return;
+            }
+            console.log('init');
+            $.ajax({
+                url: `http://localhost:9001/api/getFundraisersListByFUNDRAISERID?FUNDRAISER_ID=${param[1]}`,
+                type: "get",
+                success: function (data) {
+                    console.log(data);
+                    if (data.length) {
+                        document.getElementById("FUNDRAISER_ID").innerHTML = data[0].FUNDRAISER_ID;
+                        document.getElementById("ORGANIZER").innerHTML = data[0].ORGANIZER;
+                        document.getElementById("CAPTION").innerHTML = data[0].CAPTION;
+                        document.getElementById("TARGET_FUNDING").innerHTML = data[0].TARGET_FUNDING;
+                        document.getElementById("CURRENT_FUNDING").innerHTML = data[0].CURRENT_FUNDING;
+                        document.getElementById("CITY").innerHTML = data[0].CITY;
+                        document.getElementById("ACTIVE").innerHTML = data[0].ACTIVE;
+                        document.getElementById("CATEGORY_ID").innerHTML = data[0].CATEGORY_ID;
+                    }
+                }
+            });
+        });
+        $("#Donate").on('click', function () {
+            alert('This feature is under contruction')
+        });
+    </script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+</body>
+
+</html>
