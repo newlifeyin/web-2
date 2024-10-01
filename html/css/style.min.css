@@ -1,16 +1,11 @@
-/** ----------------------------------
- * 光年(Light Year Admin)后台管理系统模板
- * 基于Bootstrap v3.3.7
- * http://www.itshubao.com
- * yinqi<3331653644@qq.com>
- -------------------------------------- */
 body {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 	color: #4d5259;
 	line-height: 1.5;
 	font-size: 14px;
 	overflow-x: hidden;
-    background-color: #d1d8ec;
+    background-color: #403d6e;
+    color: #fff;
 }
 html,
 body {
@@ -4541,5 +4536,6 @@ body[data-theme='translucent'] .jconfirm {
     border-color: rgba(255, 255, 255, .35);
 }
 select,input{
-    background: #838383 !important;
+    width: 200px;
+    background: #ccc !important;
 }
