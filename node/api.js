@@ -22,7 +22,12 @@ app.get("/api/getFundraisersListActive", (req, res) => {
 //fundraisers by  Criteria
 app.get("/api/getFundraisersListByCriteria", (req, res) => {
     let param = req.query
-    let searchSql = 'SELECT * from `FUNDRAISER` WHERE CITY = ? AND CATEGORY_ID = ?'
+    let searchSql
+    if(param.CATEGORY_ID == 'All'){
+        searchSql = 'SELECT * from `FUNDRAISER`'
+    }else {
+        searchSql = 'SELECT * from `FUNDRAISER` WHERE CITY = ? AND CATEGORY_ID = ?'
+    }
     DBPool.query(searchSql, [param.CITY,param.CATEGORY_ID], (results) => {
         let result = results.results
         res.send(result);
