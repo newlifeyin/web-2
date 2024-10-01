@@ -6,13 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>home</title>
     <meta name="author" content="yinqi">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.min.css" rel="stylesheet">
     <style>
         .title {
-            font-size: 24px;
+            font-size: 14px;
             padding: 20px;
-            text-align: center;
         }
 
         .title a {
@@ -28,6 +26,9 @@
         .box .form-group {
             width: 50%;
         }
+        .form-group{
+            margin-top: 30px;
+        }
     </style>
 </head>
 
@@ -40,8 +41,8 @@
                 <a href="search.html">Details Page</a>
             </div>
             <div class="container-fluid">
-                <div class="row">
-                    <div class="box">
+                <div style="display: flex;">
+                    <div class="box" style="width: 60%;">
                         <div class="form-group col-md-12">
                             <label>FUNDRAISER_ID:</label>
                             <span id="FUNDRAISER_ID"></span>
@@ -76,27 +77,42 @@
                         </div>
                         <div class="form-group col-md-12">
                             <button type="button" id="Donate"
-                                style="margin: 25px 100px 0 0;float: right;">Donate</button>
+                                style="margin: 25px 100px 0 0;">Donate</button>
                         </div>
+                    </div>
+                    <div style="width: 40%;">
+                        <img style="width: 300px;margin-top: 20px;" id="img1" src="" alt="">
+                        <img style="width: 300px;margin-top: 20px;" id="img2" src="" alt="">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        function ajax(obj) {
+            let type = obj.type;
+            let url = obj.url;
+            let callback = obj.callback;
+            let xhr = new XMLHttpRequest();
+            xhr.open(type, url);
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                callback(JSON.parse(xhr.responseText));
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function init() {
             console.log(location.search);
             let param = location.search ? location.search.split('?') : ''
             if (!param) {
                 return;
             }
             console.log('init');
-            $.ajax({
+            ajax({
                 url: `http://localhost:9001/api/getFundraisersListByFUNDRAISERID?FUNDRAISER_ID=${param[1]}`,
                 type: "get",
-                success: function (data) {
+                callback: function (data) {
                     console.log(data);
                     if (data.length) {
                         document.getElementById("FUNDRAISER_ID").innerHTML = data[0].FUNDRAISER_ID;
@@ -107,15 +123,17 @@
                         document.getElementById("CITY").innerHTML = data[0].CITY;
                         document.getElementById("ACTIVE").innerHTML = data[0].ACTIVE;
                         document.getElementById("CATEGORY_ID").innerHTML = data[0].CATEGORY_ID;
+                        document.getElementById("img1").src = './images/'+data[0].FUNDRAISER_ID+'1.jpg';
+                        document.getElementById("img2").src = './images/'+data[0].FUNDRAISER_ID+'2.jpg';
                     }
                 }
             });
-        });
-        $("#Donate").on('click', function () {
+        };
+        init()
+        document.getElementById("Donate").onclick = function () {
             alert('This feature is under contruction')
-        });
+        };
     </script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
 </body>
 
 </html>

@@ -5,13 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>page1</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.min.css" rel="stylesheet">
     <style>
          .title{
-            font-size: 24px;
+            font-size: 14px;
             padding: 20px;
-            text-align: center;
         }
         .title a{
             margin-left: 50px;
@@ -69,17 +67,29 @@
             </div>
         </div>
     </div>
-
-    <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        function ajax(obj) {
+            let type = obj.type;
+            let url = obj.url;
+            let callback = obj.callback;
+            let xhr = new XMLHttpRequest();
+            xhr.open(type, url);
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                callback(JSON.parse(xhr.responseText));
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function init() {
             console.log('init');
-            $.ajax({
+            ajax({
                 url: "http://localhost:9001/api/getCategoriesList",
                 type: "get",
-                success: function (data) {
+                callback: function (data) {
                     console.log(data);
                     if (data.length) {
+                        data = [{CATEGORY_ID: 'All', NAME: 'All Category'},...data]
                         let tbodyinnerHTML = ''
                         data.map((item) => {
                             tbodyinnerHTML += `<option value=${item.CATEGORY_ID}>${item.NAME}</option>`
@@ -88,17 +98,19 @@
                     }
                 }
             });
-        });
-        $("#button2").on('click', function () {
-            let CITY = $('#CITY').val()
-            let CATEGORY_ID = $('#CATEGORY_ID').val()
+        };
+        init()
+        document.getElementById("button2").onclick = function () {
+            let CITY = document.getElementById('CITY').value
+            let CATEGORY_ID = document.getElementById('CATEGORY_ID').value
             if (!CITY && !CATEGORY_ID) {
                 alert('must pick one or multiple criteria!')
                 return
             }
-            $.ajax({
+            ajax({
                 url: `http://localhost:9001/api/getFundraisersListByCriteria?CITY=${CITY}&CATEGORY_ID=${CATEGORY_ID}`,
-                success: function (data) {
+                type: "get",
+                callback: function (data) {
                     console.log(data);
                     let tbodyinnerHTML = ''
                     if (data.length) {
@@ -122,14 +134,13 @@
                     }
                 }
             });
-        });
-        $("#button3").on('click', function () {
-            $('#CITY').val('')
-            $('#CATEGORY_ID').val('')
-        });
+        };
+        document.getElementById("button3").onclick = function () {
+            document.getElementById('CITY').value = ''
+            document.getElementById('CATEGORY_ID').value = ''
+        };
 
     </script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
 </body>
 
 </html>
