@@ -1,3 +1,19 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : localhost
+ Source Server Type    : MySQL
+ Source Server Version : 80039 (8.0.39)
+ Source Host           : localhost:3306
+ Source Schema         : crowdfunding
+
+ Target Server Type    : MySQL
+ Target Server Version : 80039 (8.0.39)
+ File Encoding         : 65001
+
+ Date: 30/09/2024 23:24:08
+*/
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -36,10 +52,10 @@ CREATE TABLE `fundraiser`  (
 -- ----------------------------
 -- Records of fundraiser
 -- ----------------------------
-INSERT INTO `fundraiser` VALUES ('Hongwei Yin', 'Yuezhong Liang', 'Guangxi University of Science and Technology Fundraising Association', '50000000', '24000000', 'Liuzhou', 'Active', '1');
-INSERT INTO `fundraiser` VALUES ('Liuzhou Civil Affairs Bureau', 'Yongmei Chen ', 'Sliding Star Dream', '60000000', '47000000', 'Liuzhou', 'Not active', '2');
-INSERT INTO `fundraiser` VALUES ('Yizhou Ding', 'China \"Chinese Charity Day\"', 'Join hands in charity and create a better life together', '95200000', '61000000', 'Liuzhou', 'Active', '1');
-INSERT INTO `fundraiser` VALUES ('Tencent Charity', 'Twenty social organizations in Liuzhou City', 'Doing good things together doubles love', '60000000', '54000000', 'Liuzhou', 'Active', '1');
-INSERT INTO `fundraiser` VALUES ('Qiaoqiao Dou ', 'Chenzhou Charity Federation', 'Flood prevention and drought resistance in Chenzhou City', '70000000', '32000000', 'Chenzhou', 'Not active', '2');
+INSERT INTO `fundraiser` VALUES ('HongweiYin', 'Yuezhong Liang', 'Guangxi University of Science and Technology Fundraising Association', '50000000', '24000000', 'Liuzhou', 'Active', '1');
+INSERT INTO `fundraiser` VALUES ('LiuzhouCivilAffairsBureau', 'Yongmei Chen ', 'Sliding Star Dream', '60000000', '47000000', 'Liuzhou', 'Not active', '2');
+INSERT INTO `fundraiser` VALUES ('YizhouDing', 'China \"Chinese Charity Day\"', 'Join hands in charity and create a better life together', '95200000', '61000000', 'Liuzhou', 'Active', '1');
+INSERT INTO `fundraiser` VALUES ('TencentCharity', 'Twenty social organizations in Liuzhou City', 'Doing good things together doubles love', '60000000', '54000000', 'Liuzhou', 'Active', '1');
+INSERT INTO `fundraiser` VALUES ('QiaoqiaoDou ', 'Chenzhou Charity Federation', 'Flood prevention and drought resistance in Chenzhou City', '70000000', '32000000', 'Chenzhou', 'Not active', '2');
 
 SET FOREIGN_KEY_CHECKS = 1;
