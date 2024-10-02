@@ -92,19 +92,24 @@
         </div>
     </div>
     <script type="text/javascript">
+        //Define a universal AJAX function
         function ajax(obj) {
             let type = obj.type;
             let url = obj.url;
             let callback = obj.callback;
             let xhr = new XMLHttpRequest();
+            //Initialization request
             xhr.open(type, url);
             xhr.send();
+            //Monitor request status changes
             xhr.onreadystatechange = function () {
+                //When the request is completed, call the callback function and parse the returned data
                 callback(JSON.parse(xhr.responseText));
             }
         }
     </script>
     <script type="text/javascript">
+        //Initialization function used to load fundraiser information
         function init() {
             console.log(location.search);
             let param = location.search ? location.search.split('?') : ''
@@ -112,6 +117,7 @@
                 return;
             }
             console.log('init');
+            //Call AJAX function to retrieve the list of fundraisers
             ajax({
                 url: `http://localhost:9001/api/getFundraisersListByFUNDRAISERID?FUNDRAISER_ID=${param[1]}`,
                 type: "get",
@@ -126,15 +132,16 @@
                         document.getElementById("CITY").innerHTML = data[0].CITY;
                         document.getElementById("ACTIVE").innerHTML = data[0].ACTIVE;
                         document.getElementById("CATEGORY_ID").innerHTML = data[0].CATEGORY_ID;
+                        //Set image path
                         document.getElementById("img1").src = './images/'+data[0].FUNDRAISER_ID+'1.jpg';
                         document.getElementById("img2").src = './images/'+data[0].FUNDRAISER_ID+'2.jpg';
                     }
                 }
             });
         };
-        init()
+        init()//Call initialization function to load data
         document.getElementById("Donate").onclick = function () {
-            alert('This feature is under contruction')
+            alert('This feature is under contruction')//The prompt function is under construction
         };
     </script>
 </body>
