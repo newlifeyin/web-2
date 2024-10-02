@@ -5,14 +5,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>page1</title>
-    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet"><!--  Introduce external style sheets -->
     <style>
          .title{
-            font-size: 14px;
-            padding: 20px;
+            font-size: 14px;/*Set the font size for the title*/
+            padding: 20px;/*Set title margin*/
         }
         .title a{
-            margin-left: 50px;
+            margin-left: 50px;/*Set link interval*/
         }
     </style>
 </head>
@@ -21,22 +21,26 @@
     <div class="lyear-layout-web">
         <div class="lyear-layout-container">
             <div class="title">
+                <!--  Navigation link -->
                 <a href="main.html">Home Page</a>
                 <a href="criteria.html">Fundraisers Page</a>
                 <a href="search.html">Details Page</a>
             </div>
             <div class="">
                 <div class="" style="display: flex;margin: 20px;">
+                    <!--  CATEGORY-ID dropdown selection box -->
                     <div style="width: 40%;display: flex;width: 300px;align-items: center;">
                         <label for="CATEGORY_ID">CATEGORY_ID:</label>
                         <select name="CATEGORY_ID" id="CATEGORY_ID">
                         </select>
                     </div>
 
+                    <!--  CITY input box -->
                     <div style="width: 40%;display: flex;width: 300px;align-items: center;">
                         <label for="CITY">CITY:</label>
                         <input type="text" id="CITY" name="CITY" value="" />
                     </div>
+                    <!--  Query and Clear Button -->
                     <div style="width: 40%;display: flex;width: 300px;align-items: center;">
                         <button type="button" id="button2" style="background-color: #f00;">query</button>
                         <button type="button" id="button3" style="background-color: #f00;margin-left: 10px;">Clear</button>
@@ -61,30 +65,32 @@
                         </tbody>
                     </table>
                     <div style="font-weight: bold;color: #f00;text-align: center;" id="note">
-
+                            <!--  Used to display additional information or notifications -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <script type="text/javascript">
+        //AJAX Request Function
         function ajax(obj) {
             let type = obj.type;
-            let url = obj.url;
+            let url = obj.url;//Request URL
             let callback = obj.callback;
             let xhr = new XMLHttpRequest();
             xhr.open(type, url);
             xhr.send();
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function () {//Execute when request status changes
                 callback(JSON.parse(xhr.responseText));
             }
         }
     </script>
     <script type="text/javascript">
+        //Initialization function
         function init() {
             console.log('init');
             ajax({
-                url: "http://localhost:9001/api/getCategoriesList",
+                url: "http://localhost:9001/api/getCategoriesList",//The requested API URL
                 type: "get",
                 callback: function (data) {
                     console.log(data);
@@ -92,6 +98,7 @@
                         data = [{CATEGORY_ID: 'All', NAME: 'All Category'},...data]
                         let tbodyinnerHTML = ''
                         data.map((item) => {
+                            //Create each dropdown option
                             tbodyinnerHTML += `<option value=${item.CATEGORY_ID}>${item.NAME}</option>`
                         })
                         document.getElementById("CATEGORY_ID").innerHTML = tbodyinnerHTML;
@@ -99,14 +106,17 @@
                 }
             });
         };
+        //Page initialization function call
         init()
         document.getElementById("button2").onclick = function () {
             let CITY = document.getElementById('CITY').value
             let CATEGORY_ID = document.getElementById('CATEGORY_ID').value
+            //Check if the user has selected at least one condition
             if (!CITY && !CATEGORY_ID) {
                 alert('must pick one or multiple criteria!')
                 return
             }
+            //Initiate AJAX request to obtain a list of fundraisers based on user input conditions
             ajax({
                 url: `http://localhost:9001/api/getFundraisersListByCriteria?CITY=${CITY}&CATEGORY_ID=${CATEGORY_ID}`,
                 type: "get",
@@ -114,6 +124,7 @@
                     console.log(data);
                     let tbodyinnerHTML = ''
                     if (data.length) {
+                        //Traverse the returned data and generate table rows
                         data.map((item) => {
                             tbodyinnerHTML += `<tr>
                                 <th><a href="search.html?${item.FUNDRAISER_ID}">${item.FUNDRAISER_ID}</a></th>
@@ -135,6 +146,7 @@
                 }
             });
         };
+        //Insert the generated row content into the table
         document.getElementById("button3").onclick = function () {
             document.getElementById('CITY').value = ''
             document.getElementById('CATEGORY_ID').value = ''
