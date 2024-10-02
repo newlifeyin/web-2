@@ -1,5 +1,6 @@
 class DBPool {
 	constructor() {
+		//Assuming the database connection pool is initialized here, the specific code is not provided
 		this.mysql = require("mysql");
 		this.config = {
 			host: 'localhost', 
@@ -29,10 +30,11 @@ class DBPool {
 	}
 
 	queryAsync(sql, params) {
-		const self = this;
+		const self = this;//Return a Promise object for asynchronous operations
 		return new Promise((resolve, reject) => {
 			this.pool.getConnection((err, connection) => {
 				if (err) {
+					//If an error occurs while obtaining the connection, reject the Promise and pass in an error message
 					reject(err);
 					return;
 				}
@@ -42,6 +44,7 @@ class DBPool {
 						reject(err);
 						return;
 					}
+					//If the query is successful, parse the Promise and return the result and field information
 					resolve({
 						results,
 						fields,
@@ -52,4 +55,5 @@ class DBPool {
 	}
 }
 
+//Export an instance of DBPool for use by other modules
 module.exports = new DBPool();
